@@ -1,0 +1,19 @@
+{
+    "type": "mongodb",
+    "url": "mongodb+srv://dogentures:dn2YjvSle4jOlBbQ@cluster0.y6fxg.mongodb.net/dogentures?retryWrites=true&w=majority",
+    "useNewUrlParser": true,
+    "useUnifiedTopology": true,
+    "port": 27017,
+    "database": "test",
+    "synchronize": true,
+    "logging": true,
+    "ssl": true,
+    "entities": ["src/entity/**/*.ts"],
+    "migrations": ["src/migration/**/*.ts"],
+    "subscribers": ["src/subscriber/**/*.ts"],
+    "cli": {
+        "entitiesDir": "src/entity",
+        "migrationsDir": "src/migration",
+        "subscribersDir": "src/subscriber"
+    }
+}
