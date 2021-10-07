@@ -40,7 +40,7 @@ import { SetCookie } from "./Resolvers/SetCookie";
     app.use(express.json());
     app.use(cookieParser());
     //app.use(cors());
-    app.use(cors({ origin: "https://dogentures.netlify.app/", credentials: true }));
+    app.use(cors({ origin: "https://dogentures.netlify.app", credentials: true }));
 
     app.use("/", router);
     app.use("/images", express.static(join(__dirname, "images")));
