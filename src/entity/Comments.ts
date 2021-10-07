@@ -19,8 +19,8 @@ export class Comments extends BaseEntity {
     id: ObjectID;
 
     @Field(() => ID, { nullable: true })
-    @ObjectIdColumn()
-    userId: ObjectID;
+    @Column("varchar")
+    userId: string;
 
     @Field(() => ID, {nullable: true})
     @ObjectIdColumn()

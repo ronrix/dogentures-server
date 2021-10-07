@@ -5,16 +5,16 @@ import { hash, compare } from "bcryptjs";
 import { createAccessToken, createRefreshToken } from "../auth";
 import { LoginResponse } from "../ObjecTypes/LoginResType";
 import { RegisterResponse } from "../ObjecTypes/RegisterResType";
-import { Profile } from "../entity/Profile"; import { FileUpload, GraphQLUpload } from "graphql-upload";
+import { Profile } from "../entity/Profile";
+import { FileUpload, GraphQLUpload } from "graphql-upload";
 import { join } from "path";
 import { createWriteStream, existsSync, mkdirSync } from "fs";
 
 // mongo
-import { getMongoRepository } from 'typeorm';
+import { getMongoRepository } from "typeorm";
 
 @Resolver()
 export class AuthResolver {
-
     userEntity = getMongoRepository(User);
     profileEntity = getMongoRepository(Profile);
 
@@ -22,9 +22,9 @@ export class AuthResolver {
     async login(
         @Arg("email", () => String) email: string,
         @Arg("password", () => String) password: string,
-        @Ctx() { res }: Context 
+        @Ctx() { res }: Context
     ) {
-
+        console.log("logging in");
         const user = await this.userEntity.findOne({ email: email });
 
         try {
@@ -45,7 +45,9 @@ export class AuthResolver {
         // token set to cookie > this is for the refresh token to store
         res.cookie("session-auth", token, { httpOnly: true });
 
-        const profileToken = await this.profileEntity.findOne({ name: user.email.split('@')[0] });
+        const profileToken = await this.profileEntity.findOne({
+            name: user.email.split("@")[0],
+        });
         console.log(profileToken);
 
         // returning accessToken to store in the client's storage like localStorage
@@ -58,7 +60,7 @@ export class AuthResolver {
     @Mutation(() => Boolean)
     async logout(@Arg("id", () => Int) id: number) {
         try {
-            // update online column 
+            // update online column
             await this.profileEntity.update({ id }, { online: false });
             // update tokenVersion
         } catch (err) {
@@ -77,8 +79,7 @@ export class AuthResolver {
         { createReadStream, filename }: FileUpload,
         @Ctx() { res }: Context
     ) {
-
-        const isAlreadyAUser = await this.userEntity.findOne({  email });
+        const isAlreadyAUser = await this.userEntity.findOne({ email });
         if (isAlreadyAUser)
             return { ok: false, msg: "email is already in use" };
 

@@ -14,12 +14,12 @@ export class React {
 
     @Mutation(() => Boolean)
     @UseMiddleware(isAuth)
-    async reaction(@Arg("id", () => ID) postId: ObjectID, @Arg('userWhoReacted', () => ID) userId: ObjectID) {
+    async reaction(@Arg("id", () => ID) postId: ObjectID, @Arg('userWhoReacted', () => String) userId: string) {
         try {
             //const post: any = await Posts.findOne({id: new ObjectId(postId) });
             const post: any = await this.postsEntity.find(new ObjectId(postId));
             //const comment: any = await Comments.findOne({userId: new ObjectId(userId) });
-            const comment: any = await this.commentsEntity.find({userId: new ObjectId(userId)});
+            const comment: any = await this.commentsEntity.find({userId: userId});
             console.log(comment);
 
             // check if the user has already reacted to the post
