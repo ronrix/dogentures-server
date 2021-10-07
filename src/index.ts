@@ -3,9 +3,11 @@ import "reflect-metadata";
 
 import express from "express";
 import {join} from 'path';
+// ts-ignore
 import cookieParser from "cookie-parser";
 
 import { ApolloServer } from "apollo-server-express";
+// ts-ignore
 import { graphqlUploadExpress } from "graphql-upload";
 
 import { buildSchema } from "type-graphql";
