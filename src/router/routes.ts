@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Request, Response} from "express";
 import {getCookie, setCookie} from '../Controllers/setCookie';
 // import multer from "multer";
 // import { mkdirSync } from "fs";
@@ -32,6 +32,9 @@ const router = express.Router();
 //     updateProfilePhoto
 // );
 //
+router.get('/', (req: Request,res: Response) => {
+    res.send("dogentures");
+});
 router.get('/set_cookie', setCookie);
 router.get('/get_cookie', getCookie);
 
