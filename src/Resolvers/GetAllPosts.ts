@@ -4,7 +4,7 @@ import { Posts } from '../entity/Post';
 import { GetAllPostsType } from '../ObjecTypes/GetAllPostsType';
 import { isAuth } from '../isAuth';
 import { getMongoRepository } from 'typeorm';
-import { ObjectId } from 'mongodb';
+//import { ObjectId } from 'mongodb';
 
 import {Context} from '../Context';
 
@@ -20,7 +20,8 @@ export class GetAllPosts {
     @Query(() => [GetAllPostsType])
     @UseMiddleware(isAuth)
     async getAllPostsByUserId(@Ctx() {payload}: Context) {
-        return await this.postsEntity.find({userId: new ObjectId(payload?.userId)});
+        const posts = await this.postsEntity.find({userId: String(payload?.userId)});
+        return posts;
     }
 
 }
