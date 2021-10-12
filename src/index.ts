@@ -30,6 +30,9 @@ import { React } from "./Resolvers/React";
 import { VerifyToken } from "./Resolvers/VerifyToken";
 import { GetInfo } from "./Resolvers/GetInfo";
 import { SetCookie } from "./Resolvers/SetCookie"; 
+import { AddBioDesc } from "./Resolvers/AddBioDesc"; 
+import { NotificationResolver } from "./Resolvers/Notification"; 
+import { MessagesResolver } from "./Resolvers/Messages"; 
 
 
 (async () => {
@@ -37,8 +40,8 @@ import { SetCookie } from "./Resolvers/SetCookie";
     const app = express();
     app.use(express.json());
     app.use(cookieParser());
-    //app.use(cors());
-    app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+    app.use(cors());
+    //app.use(cors({ origin: process.env.HOST || "*", credentials: true }));
 
     app.use("/", router);
     app.use("/images", express.static(join(__dirname, "images")));
@@ -74,6 +77,9 @@ import { SetCookie } from "./Resolvers/SetCookie";
                 VerifyToken,
                 GetInfo,
                 SetCookie,  
+                AddBioDesc,  
+                NotificationResolver,  
+                MessagesResolver,  
             ],
         }),
         context: ({ req, res }) => ({ req, res }),

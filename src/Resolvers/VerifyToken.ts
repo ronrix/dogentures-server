@@ -13,7 +13,7 @@ class VerifyTokenRes {
 export class VerifyToken {
     @Query(() => VerifyTokenRes)
     @UseMiddleware(isAuth)
-    verifyToken(@Arg('token', () => String!) token: string) {
+    verifyToken(@Arg("token", () => String) token: string) {
         try {
             // verifying token
             verify(String(token), process.env.ACCESS_TOKEN_SECRET!);

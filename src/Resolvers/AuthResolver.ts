@@ -32,8 +32,9 @@ export class AuthResolver {
             const valid = await compare(password, user.password);
             if (!valid) throw "username or password is incorrect";
             // update db online column to true after a successful login
-            await this.profileEntity.update({ id: user.id }, { online: true });
+            await this.profileEntity.update({ user: {id: user?.id} }, { online: true });
         } catch (e) {
+            console.log("error: ", e);
             return {
                 msg: e,
                 ok: false,
@@ -45,10 +46,7 @@ export class AuthResolver {
         // token set to cookie > this is for the refresh token to store
         res.cookie("session-auth", token, { httpOnly: true });
 
-        const profileToken = await this.profileEntity.findOne({
-            name: user.email.split("@")[0],
-        });
-        console.log(profileToken);
+        const profileToken = await this.profileEntity.findOne({ user });
 
         // returning accessToken to store in the client's storage like localStorage
         return {

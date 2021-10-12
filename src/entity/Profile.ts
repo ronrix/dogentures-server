@@ -32,6 +32,10 @@ export class Profile extends BaseEntity {
     @Column("bool", { default: true })
     online: boolean;
 
+    @Field()
+    @Column("varchar")
+    bioDesc: string;
+
     @Field(() => User)
     @Column(() => User)
     user: User;

@@ -7,7 +7,6 @@ import { isAuth } from '../isAuth';
 import { Context } from '../Context';
 import {getMongoRepository, ObjectID} from 'typeorm';
 //import {ObjectId} from 'mongodb';
-
 @ObjectType()
 class GetInfoRes {
     @Field(() => String, {nullable: true})
@@ -15,6 +14,9 @@ class GetInfoRes {
 
     @Field(() => String, {nullable: true})
     name: string
+    
+    @Field(() => String, {nullable: true})
+    bioDesc: string
 
     @Field(() => Int, {nullable: true})
     posts: number
@@ -38,11 +40,13 @@ export class GetInfo  {
             const user = users.filter(user => String(user.id) === String(payload?.userId));
 
            // get the length of users posts
-           const post: any = await Posts.find({ where: { userId: user[0]?.id }});
+           const post: any = await Posts.find({ where: { userId: String(user[0]?.id) }});
+           console.log(post);
 
             return { 
                     avatar: user[0]?.avatar,
                     name: user[0]?.name, 
+                    bioDesc: user[0]?.bioDesc,
                     posts: post?.length,
                 };
         } catch(e) {

@@ -28,12 +28,11 @@ export const isAuth: MiddlewareFn<Context> = async ({ context }, next) => {
             const users = await getRepository(Profile).find(); 
 
             let exists = false;
-
             users.forEach(user => {
                 if(String(user.id) === String(payload?.userId)) exists = true;
             });
 
-            if (!exists) throw "not authenticated";
+            if (!exists) throw "no user found";
             context.payload = payload as any;
 
         } else {
